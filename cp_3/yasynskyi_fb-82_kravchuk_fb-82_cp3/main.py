@@ -6,7 +6,7 @@ alf = 'абвгдежзийклмнопрстуфхцчшщьыэюя'
 
 def linear_expression(a, b, m):
     if gcd(a, m) == 1:
-        return (reverse(a, m) * b) % m
+        return [(reverse(a, m) * b) % m]
     if gcd(a, m) > 1 and b % gcd(a, m) == 0:
         a, b, n = a // gcd(a, m), b // gcd(a, m), m // gcd(a, m)
         x = linear_expression(a, b, n)
@@ -63,14 +63,12 @@ def get_ab(rus_freq_max,text_freq_max):
                 y = bigram_values[text_freq_max[i]] - bigram_values[text_freq_max[k]]
                 A = linear_expression(x, y, sqrt_m)
                 if A != None:
-                    if type(A) != int:
-                        break
-                    else:
-                        B = (bigram_values[text_freq_max[i]] - A * bigram_values[rus_freq_max[i]]) % sqrt_m
-                    res = []
-                    res.append(A)
-                    res.append(B)
-                    list_res.append(res)
+                    for koren_a in A:
+                        B = (bigram_values[text_freq_max[i]] - koren_a * bigram_values[rus_freq_max[i]]) % sqrt_m
+                        res = []
+                        res.append(koren_a)
+                        res.append(B)
+                        list_res.append(res)
     return list_res
 
 
